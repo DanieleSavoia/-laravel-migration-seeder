@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Train;
+use Faker\Generator as Faker;
 
 class TrainsTableSeeder extends Seeder
 {
@@ -13,35 +14,51 @@ class TrainsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        $trains = [
-            [
-                'agency' => 'Trenitalia',
-                'departure_station' => 'Salerno',
-                'departure_station' => 'Napoli',
-                'departure_time' => '2023-06-27 20:06:31',
-                'arrival_time' => '2023-06-27 20:06:31',
-                'train_code' => 'SROMADKA',
-                'number_of_carriages' => '8',
-                'in_time' => True,
-                'deleted' => True,
-            ],
-            [
-                'agency' => 'Trenitalia',
-                'departure_station' => 'Montecosaro',
-                'departure_station' => 'Brindisi',
-                'departure_time' => '2023-06-27 20:06:31',
-                'arrival_time' => '2023-06-27 20:06:31',
-                'train_code' => 'DELRLDGA',
-                'number_of_carriages' => '12',
-                'in_time' => false,
-                'deleted' => True,
-            ],
-        ];
+        //       Metodo con array 
+        //        $trains = [
+        //           [
+        //             'agency' => 'Trenitalia',
+        //               'departure_station' => 'Salerno',
+        //              'arrival_station' => 'Napoli',
+        //              'departure_time' => '2023-06-22 12:06:31',
+        //             'arrival_time' => '2023-06-22 14:11:31',
+        //              'train_code' => 'SROMADKA',
+        //             'number_of_carriages' => '8',
+        //              'in_time' => True,
+        //              'deleted' => True,
+        //          ],
+        //          [
+        //              'agency' => 'Trenitalia',
+        //              'departure_station' => 'Montecosaro',
+        //              'arrival_station' => 'Brindisi',
+        //              'departure_time' => '2022-12-16 14:06:31',
+        //              'arrival_time' => '2022-12-16 19:22:04',
+        //              'train_code' => 'DELRLDGA',
+        //              'number_of_carriages' => '12',
+        //              'in_time' => false,
+        //              'deleted' => True,
+        //          ],
+        //      ];
+        //
+        //      foreach ($trains as $arrTrain) {
+        //          Train::create($arrTrain);
+        //        }
 
-        foreach ($trains as $arrTrain) {
-            Train::create($arrTrain);
+        // metodo con faker 
+        for ($i = 0; $i <= 10; $i++) {
+            Train::create([
+                'agency' => 'Trenitalia',
+                'departure_station' => $faker->city(),
+                'arrival_station' => $faker->city(),
+                'departure_time' => $faker->time(),
+                'arrival_time' => $faker->time(),
+                'train_code' => $faker->regexify('[A-Z]{5}[0-4]{3}'),
+                'number_of_carriages' => $faker->numberBetween(4, 15),
+                'in_time' => $faker->boolean(),
+                'deleted' => $faker->boolean(),
+            ]);
         }
     }
 }
